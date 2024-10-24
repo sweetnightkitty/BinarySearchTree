@@ -7,13 +7,16 @@ function createNode(data) {
 }
 
 function tree(array) {
-    //recursive stuff
-
     const middle = Math.floor(array.length / 2);
     const root = createNode(array[middle]);
 
-    //root.leftChild = tree(left)
-    //root.rightChild = tree(right);
+    const left = array.slice(0, middle);
+    const right = array.slice(middle);
+
+    root.leftChild = tree(left)
+    root.rightChild = tree(right);
+
+    return root;
 }
 
 function buildTree(array) {
