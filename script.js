@@ -6,13 +6,14 @@ function createNode(data) {
     }
 }
 
-function tree() {
+function tree() {  
     return {
-        construct: function(array) {
+        construct: function (array) {
             const processedArray = this.processArray(array);
             this.root = this.buildTree(processedArray);
             return this.root;
         },
+
 
         processArray: function(array) {
             return removeDuplicates(mergeSort(array));
@@ -50,6 +51,32 @@ function tree() {
               if (node.leftChild !== null) {
                 this.prettyPrint(node.leftChild, `${prefix}${isLeft ? "    " : "│   "}`, true);
               }
+        },
+
+        insert: function(value) {
+            //insert to the tree by traversing the tree
+            let currentNode = this.root;
+            const newNode = createNode(value);
+
+            while(currentNode) {
+                if(value < currentNode.data) {
+                    if(!currentNode.leftChild) {
+                        currentNode.leftChild = newNode;
+                        return this.root;
+                    }
+                    currentNode = currentNode.leftChild;
+                } else if(value > currentNode.data) {
+                    if(!currentNode.rightChild) {
+                        currentNode.rightChild = newNode;
+                        return this.root;
+                    }
+                    currentNode = currentNode.rightChild;
+                }
+            }
+        },
+
+        deleteValue: function(value) {
+            //delete value from tree by traversing the tree
         }
     }
 }
@@ -114,5 +141,9 @@ const mixedArray = [5, 2, 3, 7, 4, 1, 6];
 const four = [1, 2, 3, 4];
 const seven = [1, 2, 3, 4, 5, 6, 7];
 const nine = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+
+const hole = [3, 1, 4];
+
 
 const test = tree();
