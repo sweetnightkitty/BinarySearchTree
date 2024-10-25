@@ -54,7 +54,6 @@ function tree() {
         },
 
         insert: function(value) {
-            //insert to the tree by traversing the tree
             let currentNode = this.root;
             const newNode = createNode(value);
 
@@ -74,10 +73,6 @@ function tree() {
                 }
             }
         },
-
-        deleteValue: function(value) {
-            //delete value from tree by traversing the tree
-        }
     }
 }
 
