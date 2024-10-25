@@ -6,33 +6,46 @@ function createNode(data) {
     }
 }
 
-function tree(array, start = 0, end = (array.length - 1)) {
-    const middle = Math.floor((end - start) / 2);
-    const root = createNode(array[middle]);
+function tree() {
+    return {
+        construct: function(array) {
+            const processedArray = this.processArray(array);
+            this.root = this.buildTree(processedArray);
+            return this.root;
+        },
 
-    //base case: When length becomes 1 children should remain "null"
-    if(array.length > 1 ) {
-        root.leftChild = tree(array.slice(0, (middle)));
-        root.rightChild = tree(array.slice(middle + 1));
+        processArray: function(array) {
+            return removeDuplicates(mergeSort(array));
+        },
+        
+        buildTree: function(array, start = 0, end = (array.length - 1)) {
+            const middle = Math.floor((end - start) / 2);
+            const root = createNode(array[middle]);
+        
+            //base case: When length becomes 1 children should remain "null"
+            if(array.length > 1 ) {
+                root.leftChild = this.buildTree(array.slice(0, (middle)));
+                root.rightChild = this.buildTree(array.slice(middle + 1));
+
+                if(!root.leftChild.data) {
+                    root.leftChild = null;
+                } else if(!root.rightChild.data) {
+                    root.rightChild = null;
+                }
+            }
+
+        
+            return root;
+
+        }
     }
-
-    return root;
 }
 
-function buildTree(array, start = 0, end = (array.length - 1)) {
-    //sorts and removes duplicates from the array
-    const processedArray = removeDuplicates(mergeSort(array));
 
-
-
-    const thisTree = tree(processedArray);
-
-    return thisTree;
-}
 
 
 function mergeSort(array) {
-    if(array.length === 1) {
+    if(array.length == 1) {
         return array;
     }
     const middle = Math.floor(array.length / 2);
@@ -78,7 +91,7 @@ function removeDuplicates(array) {
 
 
 
-
+//TEST EXAMPLES
 const mixedDuplicatesArray = [4, 2, 3, 5, 5, 1];
 
 const evenArray = [1, 2, 3, 4, 5, 6];
@@ -88,3 +101,5 @@ const mixedArray = [5, 2, 3, 7, 4, 1, 6];
 const four = [1, 2, 3, 4];
 const seven = [1, 2, 3, 4, 5, 6, 7];
 const nine = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+const test = tree();
