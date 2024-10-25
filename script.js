@@ -21,6 +21,8 @@ function tree(array, start = 0, end = (array.length - 1)) {
 
 function buildTree(array) {
     const sortedArray = mergeSort(array);
+
+    const tree = tree(sortedArray);
 }
 
 
@@ -56,12 +58,23 @@ function merge(left, right) {
     .concat(right.slice(rightIndex));
 }
 
+function removeDuplicates(array) {
+    for(let i = array.length - 1; i >= 0; i--) {
+        for(let j = i - 1; j >= 0; j--) {
+            if(array[j] == array[i]) {
+                array.splice(j, 1);
+            }
+        }
+    }
+    return array;
+};
 
 
 
 
 
 
+const mixedDuplicatesArray = [4, 2, 3, 5, 5, 1];
 
 const evenArray = [1, 2, 3, 4, 5, 6];
 const oddArray = [1, 2, 3, 4, 5, 6, 7];
