@@ -19,10 +19,15 @@ function tree(array, start = 0, end = (array.length - 1)) {
     return root;
 }
 
-function buildTree(array) {
-    const sortedArray = mergeSort(array);
+function buildTree(array, start = 0, end = (array.length - 1)) {
+    //sorts and removes duplicates from the array
+    const processedArray = removeDuplicates(mergeSort(array));
 
-    const tree = tree(sortedArray);
+
+
+    const thisTree = tree(processedArray);
+
+    return thisTree;
 }
 
 
