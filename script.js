@@ -6,23 +6,15 @@ function createNode(data) {
     }
 }
 
-function tree(array) {
-    const middle = Math.floor(array.length / 2);
+function tree(array, start = 0, end = (array.length - 1)) {
+    const middle = Math.floor((end - start) / 2);
     const root = createNode(array[middle]);
 
-    if(array.length == 1) {
-        return root;
+    //base case
+    if(array.length > 1 ) {
+        root.leftChild = tree(array.slice(0, (middle)));
+        root.rightChild = tree(array.slice(middle + 1));
     }
-
-    if(array.length == 2) {
-        return root;
-    }
-
-    const left = array.slice(0, middle);
-    const right = array.slice(middle);
-
-    root.leftChild = tree(left)
-    root.rightChild = tree(right);
 
     return root;
 }
@@ -34,3 +26,7 @@ function buildTree(array) {
 
 const evenArray = [1, 2, 3, 4, 5, 6];
 const oddArray = [1, 2, 3, 4, 5, 6, 7];
+
+const four = [1, 2, 3, 4];
+const seven = [1, 2, 3, 4, 5, 6, 7];
+const nine = [1, 2, 3, 4, 5, 6, 7, 8, 9];
