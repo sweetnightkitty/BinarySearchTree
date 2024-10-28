@@ -70,6 +70,8 @@ function tree() {
                         return this.root;
                     }
                     currentNode = currentNode.rightChild;
+                } else {
+                    return this.root;
                 }
             }
         },
