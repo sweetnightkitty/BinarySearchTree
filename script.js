@@ -40,7 +40,7 @@ function tree() {
 
         },
 
-        prettyPrint: function(node, prefix = "", isLeft = true) {
+        prettyPrint: function(node = this.root, prefix = "", isLeft = true) {
             if (node === null) {
                 return;
               }
@@ -82,46 +82,36 @@ function tree() {
             }
         },
 
-        // deleteValue: function(value) {
-        //     //delete value from tree by traversing the tree
-        //     let currentNode = this.root;
-        //     let parentNode;
+        deleteValue: function(currentNode, value) {
+            if(currentNode == null) {
+                return currentNode;
+            }
 
-        //     //traverse down to the far left
-        //     while(currentNode) {
-        //         if(currentNode.leftChild) {
-        //             parentNode = currentNode;
-        //             currentNode = currentNode.leftChild;
-        //         } else if(!currentNode.leftChild)
-        //     }
+            if(value < currentNode.data) {
+                currentNode.leftChild = this.deleteValue(currentNode.leftChild, value);
+            } else if(value > currentNode.data) {
+                currentNode.rightChild = this.deleteValue(currentNode.rightChild, value);
+            } else {
+                //if value is == currentNode.data
 
+                //If no left child returns right child null or not
+                if(currentNode.leftChild == null) {
+                    return currentNode.rightChild;
+                }
 
-        //     //deleting a leaf node: if !leftChild && !rightChild -> convert parent to null
-        //     if(currentNode.data == value && !currentNode.leftChild && !currentNode.rightChild) {
-        //         if(parentNode.leftChild == currentNode) {
-        //             parentNode.leftChild = null;
-        //         } else {parentNode.rightChild = null}
-        //     } 
+                //if no right child returns left child null or not
+                if(currentNode.rightChild == null) {
+                    return currentNode.leftChild;
+                }
 
-        //     //deleting a node with (left) child:
-        //     if(currentNode.data == value && currentNode.leftChild && !currentNode.rightChild) {
-        //         if(parentNode.leftChild == currentNode) {
-        //             parentNode.leftChild = currentNode.leftChild;
-        //         } else {
-        //             parentNode.rightChild = currentNode.leftChild;
-        //         }
-        //     }
+                let successor = getSuccessor(currentNode);
+                currentNode.data = successor.data;
+                currentNode.rightChild = this.deleteValue(currentNode.rightChild, successor.data);
 
-        //     //deleting a node with (right) child:
-        //     if(currentNode.data == value && !currentNode.leftChild && currentNode.rightChild) {
-        //         if(parentNode.leftChild == currentNode) {
-        //             parentNode.leftChild = currentNode.rightChild;
-        //         } else {
-        //             parentNode.rightChild = currentNode.rightChild;
-        //         }
-        //     } 
+            }
+            return currentNode;
 
-        // }
+        }
     }
 }
 
@@ -171,7 +161,13 @@ function removeDuplicates(array) {
     return array;
 };
 
-
+function getSuccessor(currentNode) {
+    currentNode = currentNode.rightChild;
+    while(currentNode && currentNode.leftChild) {
+        currentNode = currentNode.leftChild;
+    }
+    return currentNode;
+};
 
 
 
