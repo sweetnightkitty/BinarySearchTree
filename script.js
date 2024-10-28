@@ -40,7 +40,7 @@ function tree() {
 
         },
 
-        prettyPrint: function(node, prefix = "", isLeft = true) {
+        prettyPrint: function(node = this.root, prefix = "", isLeft = true) {
             if (node === null) {
                 return;
               }
@@ -76,7 +76,44 @@ function tree() {
             }
         },
 
-    
+        inOrder: function (currentNode) {
+            if(currentNode) {
+                this.inOrder(currentNode.leftChild);
+                console.log(currentNode.data);
+                this.inOrder(currentNode.rightChild);
+            }
+        },
+
+        deleteValue: function(currentNode, value) {
+            if(currentNode == null) {
+                return currentNode;
+            }
+
+            if(value < currentNode.data) {
+                currentNode.leftChild = this.deleteValue(currentNode.leftChild, value);
+            } else if(value > currentNode.data) {
+                currentNode.rightChild = this.deleteValue(currentNode.rightChild, value);
+            } else {
+                //if value is == currentNode.data
+
+                //If no left child returns right child null or not
+                if(currentNode.leftChild == null) {
+                    return currentNode.rightChild;
+                }
+
+                //if no right child returns left child null or not
+                if(currentNode.rightChild == null) {
+                    return currentNode.leftChild;
+                }
+
+                let successor = getSuccessor(currentNode);
+                currentNode.data = successor.data;
+                currentNode.rightChild = this.deleteValue(currentNode.rightChild, successor.data);
+
+            }
+            return currentNode;
+
+        }
     }
 }
 
@@ -126,7 +163,13 @@ function removeDuplicates(array) {
     return array;
 };
 
-
+function getSuccessor(currentNode) {
+    currentNode = currentNode.rightChild;
+    while(currentNode && currentNode.leftChild) {
+        currentNode = currentNode.leftChild;
+    }
+    return currentNode;
+};
 
 
 
