@@ -74,38 +74,54 @@ function tree() {
             }
         },
 
-        deleteValue: function(value) {
-            //delete value from tree by traversing the tree
-            let currentNode = this.root;
-            let parentNode;
-
-
-            //deleting a leaf node: if !leftChild && !rightChild -> convert parent to null
-            if(currentNode.data == value && !currentNode.leftChild && !currentNode.rightChild) {
-                if(parentNode.leftChild == currentNode) {
-                    parentNode.leftChild = null;
-                } else {parentNode.rightChild = null}
-            } 
-
-            //deleting a node with (left) child:
-            if(currentNode.data == value && currentNode.leftChild && !currentNode.rightChild) {
-                if(parentNode.leftChild == currentNode) {
-                    parentNode.leftChild = currentNode.leftChild;
-                } else {
-                    parentNode.rightChild = currentNode.leftChild;
-                }
+        inOrder: function (currentNode) {
+            if(currentNode) {
+                this.inOrder(currentNode.leftChild);
+                console.log(currentNode.data);
+                this.inOrder(currentNode.rightChild);
             }
+        },
 
-            //deleting a node with (right) child:
-            if(currentNode.data == value && !currentNode.leftChild && currentNode.rightChild) {
-                if(parentNode.leftChild == currentNode) {
-                    parentNode.leftChild = currentNode.rightChild;
-                } else {
-                    parentNode.rightChild = currentNode.rightChild;
-                }
-            } 
+        // deleteValue: function(value) {
+        //     //delete value from tree by traversing the tree
+        //     let currentNode = this.root;
+        //     let parentNode;
 
-        }
+        //     //traverse down to the far left
+        //     while(currentNode) {
+        //         if(currentNode.leftChild) {
+        //             parentNode = currentNode;
+        //             currentNode = currentNode.leftChild;
+        //         } else if(!currentNode.leftChild)
+        //     }
+
+
+        //     //deleting a leaf node: if !leftChild && !rightChild -> convert parent to null
+        //     if(currentNode.data == value && !currentNode.leftChild && !currentNode.rightChild) {
+        //         if(parentNode.leftChild == currentNode) {
+        //             parentNode.leftChild = null;
+        //         } else {parentNode.rightChild = null}
+        //     } 
+
+        //     //deleting a node with (left) child:
+        //     if(currentNode.data == value && currentNode.leftChild && !currentNode.rightChild) {
+        //         if(parentNode.leftChild == currentNode) {
+        //             parentNode.leftChild = currentNode.leftChild;
+        //         } else {
+        //             parentNode.rightChild = currentNode.leftChild;
+        //         }
+        //     }
+
+        //     //deleting a node with (right) child:
+        //     if(currentNode.data == value && !currentNode.leftChild && currentNode.rightChild) {
+        //         if(parentNode.leftChild == currentNode) {
+        //             parentNode.leftChild = currentNode.rightChild;
+        //         } else {
+        //             parentNode.rightChild = currentNode.rightChild;
+        //         }
+        //     } 
+
+        // }
     }
 }
 
