@@ -114,6 +114,17 @@ function tree() {
             return currentNode;
 
         },
+
+        find: function(value, currentNode = this.root) {
+            if(currentNode == null) {
+                return currentNode;
+            }
+
+                this.find(value, currentNode.leftChild);
+                this.find(value, currentNode.rightChild);
+
+            return currentNode;
+        }
     }
 }
 
