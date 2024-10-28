@@ -76,7 +76,7 @@ function tree() {
             }
         },
 
-        inOrder: function (currentNode) {
+        inOrder: function (currentNode = this.root) {
             if(currentNode) {
                 this.inOrder(currentNode.leftChild);
                 console.log(currentNode.data);
@@ -84,15 +84,15 @@ function tree() {
             }
         },
 
-        deleteValue: function(currentNode, value) {
+        deleteValue: function(value, currentNode = this.root) {
             if(currentNode == null) {
                 return currentNode;
             }
 
             if(value < currentNode.data) {
-                currentNode.leftChild = this.deleteValue(currentNode.leftChild, value);
+                currentNode.leftChild = this.deleteValue(value, currentNode.leftChild);
             } else if(value > currentNode.data) {
-                currentNode.rightChild = this.deleteValue(currentNode.rightChild, value);
+                currentNode.rightChild = this.deleteValue(value, currentNode.rightChild);
             } else {
                 //if value is == currentNode.data
 
@@ -108,12 +108,12 @@ function tree() {
 
                 let successor = getSuccessor(currentNode);
                 currentNode.data = successor.data;
-                currentNode.rightChild = this.deleteValue(currentNode.rightChild, successor.data);
+                currentNode.rightChild = this.deleteValue(successor.data, currentNode.rightChild);
 
             }
             return currentNode;
 
-        }
+        },
     }
 }
 
